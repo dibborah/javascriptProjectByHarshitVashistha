@@ -10,11 +10,6 @@ const store = {
             title: 'Zustand Tutorial',
             completed: true
         },
-        {
-            id: '3',
-            title: 'Todo list project',
-            completed: true
-        },
     ]
 };
 
@@ -22,20 +17,23 @@ const storeHandlers = {
     // traps (get and set)
 
     get(target, property){
-        // console.log('you are trying to get', property);
         return target[property];
     },
     set(target, property, value){
-        // console.log('you are trying to set', property);
         target[property] = value;
         if(property === 'todos'){
             window.dispatchEvent(new Event('todoschange'));
-        }
+        };
+        localStorage.setItem('store', JSON.stringify(target));
         return true
     }
 }
 
 const storeProxy = new Proxy(store, storeHandlers);
+
+// localStorage.setItem('store', JSON.stringify(storeProxy));
+// const localStorageItems = JSON.parse(localStorage.getItem('store'));
+
 
 function addTodos(newTodo) {
     storeProxy.todos = [...storeProxy.todos, newTodo];
@@ -54,7 +52,7 @@ function toggle(id, completed) {
         }
         return todo;
     })
-}
+};
 
 export default storeProxy;
 export { addTodos, deleteTodo, toggle };

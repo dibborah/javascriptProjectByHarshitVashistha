@@ -2,11 +2,19 @@ import render from "./render.js";
 import store, { addTodos, deleteTodo, toggle } from "./store.js";
 
 window.addEventListener('todoschange', () => {
-    console.log('event fired');
     render();
 });
 
-render();
+// try to get store from localStorage
+const storeFromLocalStorage = JSON.parse(localStorage.getItem('store'));
+console.log(storeFromLocalStorage);
+
+if (storeFromLocalStorage?.todos.length > 0) {
+    store.todos = storeFromLocalStorage.todos;
+} else {
+    localStorage.setItem('store', JSON.stringify(store));
+    render();
+}
 
 // form get
 
@@ -49,5 +57,4 @@ ul.addEventListener('change', (e) => {
         toggle(id, completed);
     }
 });
-
 
