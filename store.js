@@ -19,19 +19,33 @@ const store = {
 };
 
 const storeHandlers = {
+    // traps (get and set)
+
     get(target, property){
-        console.log('you are trying to get', property);
+        // console.log('you are trying to get', property);
         return target[property];
     },
     set(target, property, value){
-        console.log('you are trying to set', property);
+        // console.log('you are trying to set', property);
+        target[property] = value;
         if(property === 'todos'){
-            window.dispatchEvent(new Event('todos_change'));
+            window.dispatchEvent(new Event('todoschange'));
         }
-        return target[property] = value;
+        return true
     }
 }
 
 const storeProxy = new Proxy(store, storeHandlers);
 
+function addTodos(newTodo) {
+    storeProxy.todos = [...storeProxy.todos, newTodo];
+}
+
+function deleteTodos(id) {
+    storeProxy.todos = storeProxy.todos.filter((todo) => {
+        return todo.id !== id
+    });
+};
+
 export default storeProxy;
+export { addTodos, deleteTodos };

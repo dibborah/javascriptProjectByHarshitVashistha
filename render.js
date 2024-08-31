@@ -2,7 +2,6 @@ import store from "./store.js"; // We are using pure vanilla js so we have to wr
 // If using frameworks like react .js extension of files are not needed to be written
 
 function render() {
-
     const ul = document.querySelector('.todos');
 
     const todosHTML = store.todos.map((todo) => {
