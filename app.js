@@ -12,7 +12,6 @@ render();
 
 const form = document.querySelector('#form');
 const todoTitleInput = document.querySelector('#todo-title-input');
-
 const ul = document.querySelector('.todos');
 
 form.addEventListener('submit', (e) => {
@@ -38,8 +37,17 @@ ul.addEventListener('click', (e) => {
         const id = e.target.closest('.todo').dataset.id;
         deleteTodo(id);
     }
+    // if(e.target.classList.contains('todo-checkbox')) {
+    //     toggle(e.target.closest('.todo').dataset.id)
+    // }
+});
+
+ul.addEventListener('change', (e) => {
     if(e.target.classList.contains('todo-checkbox')) {
-        toggle(e.target.closest('.todo').dataset.id)
+        const id = e.target.closest('.todo').dataset.id
+        const completed = e.target.checked;
+        toggle(id, completed);
     }
-})
+});
+
 

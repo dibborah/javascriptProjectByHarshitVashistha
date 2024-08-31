@@ -47,10 +47,10 @@ function deleteTodo(id) {
     });
 };
 
-function toggle(id) {
+function toggle(id, completed) {
     storeProxy.todos = storeProxy.todos.map((todo) => {
         if( todo.id === id){
-            return {...todo, completed: !todo.completed}
+            return {...todo, completed };
         }
         return todo;
     })
